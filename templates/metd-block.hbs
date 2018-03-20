@@ -1,0 +1,105 @@
+
+
+<div class = "name">
+        {{#if block.data.details.entity}}
+        <i class = "fa fa-eye #ADADAD"></i><a href="https://metadefender.opswat.com/results#!/file/{{block.data.details.entity}}/hash/overview"> View in Metadefender </a>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.top_threat}}
+        <span class="balis">Threat Ranking: </span>
+        <b>{{block.data.details.body.top_threat}}</b>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.process_info.profile}}
+        <span class="balis">Profile: </span>
+        <b>{{block.data.details.body.process_info.profile}}</b>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+      {{#if block.data.details.body.file_info.file_type_extension}}
+      <span class="balis">File Type Extension: </span>
+      <b>{{block.data.details.body.file_info.file_type_extension}}</b>
+      {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.file_info.file_type_description}}
+        <span class="balis">File Type Description: </span>
+        <b>{{block.data.details.body.file_info.file_type_description}}</b>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.file_info.upload_timestamp}}
+        <span class="balis">Upload Timestamp: </span>
+        <b>{{block.data.details.body.file_info.upload_timestamp}}</b>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.file_info.md5}}
+        <span class="balis">MD5: </span>
+        <b>{{block.data.details.body.file_info.md5}}</b>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.file_info.sha1}}
+        <span class="balis">SHA1: </span>
+        <b>{{block.data.details.body.file_info.sha1}}</b>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.file_info.sha256}}
+        <span class="balis">SHA256: </span>
+        <b>{{block.data.details.body.file_info.sha256}}</b>
+        {{/if}}
+    </div>
+
+    <div class = "details">
+        {{#if block.data.details.body.process_info.progress_percentage}}
+        <span class="balis">Progress Percentage: </span>
+        <b>{{block.data.details.body.process_info.progress_percentage}}</b>
+        {{/if}}
+    </div>
+
+
+    <a class="toggleScanner" {{action "toggleScanner"}}> Click Here to see Scanner Results</a>
+    {{#if isShowingDiv}}
+    <div id="collapse-xref" class="xref-table">
+        {{#if block.data.details.body.scan_results.scan_details}}
+            <table class="padding-0-5" style="margin-top: 10px;">
+                <thead>
+                <th></th>
+                <th>Scanner</th>
+                <th>Threat Found</th>
+                </thead>
+                <tbody>
+                {{#each-in block.data.details.body.scan_results.scan_details as |key value|}}
+                    <tr>
+                        <td style="width:20px"><i class="{{if value.threat_found 'fa fa-bug' 'bts bt-check'}}"></i></td>
+                        <td>
+                            {{#if key}}
+                                {{key}}
+                            {{/if}}
+                        </td>
+                        <td>
+                            {{#if value.threat_found}}
+                                {{value.threat_found}}
+                            {{else}}
+                                <span class="success">[Nothing Detected from Scanner]</span>
+                            {{/if}}
+                        </td>
+                    </tr>
+                {{/each-in}}
+                </tbody>
+            </table>
+        {{/if}}
+    </div>
+{{/if}}
