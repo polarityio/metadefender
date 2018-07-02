@@ -2,7 +2,7 @@
 
 Polarity's  MeaDefender integration gives users access to potentially malicious file hash lookups against the MetaDefender OPSWAT REST API.
 
-![metadefender](https://user-images.githubusercontent.com/22529325/37686749-1c00befe-2c6f-11e8-87b1-8f5128060523.png)
+![metadefender](https://user-images.githubusercontent.com/306319/42179255-3946de74-7e01-11e8-8a2a-4873ca5f4f4b.png)
 
 Please see [MetaDefender](https://metadefender.opswat.com) for more information.
 
