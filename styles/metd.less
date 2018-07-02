@@ -1,33 +1,7 @@
-/*
- All integrations are namespaced with the class `<integration_id>-integration`.  When creating custom
- CSS to style your integration you should ensure that all your classes are appropriately namespaced to prevent
- your css from affecting other integrations.  Note that the integration id is based off the name of the integration
- directory.
-*/
-.metadefender-integration {
-}
-
-div.name {
-  text-align: left;
-  font-size: 12px;
-  padding-left: 5px;
-  font-weight: 600;
-  color: #ADADAD ;
-  padding-top: 3px;
-}
-
-div.details {
-  text-align: left;
-  font-size: 12px;
-  padding-left: 5px;
-  font-weight: 300;
-}
-
 @color-success: #5cb85c;
 @color-danger: #d9534f;
 
 .xref-table{
-
   min-height: 65px;
 
   b.heading {
@@ -39,18 +13,6 @@ div.details {
     color: #888;
   }
 
-  i {
-    font-size: 10px;
-  }
-
-  i.bt-check {
-    color: @color-success;
-  }
-
-  i.fa-bug {
-    color: @color-danger;
-  }
-
   td.positives {
     width: 60px;
   }
@@ -58,4 +20,12 @@ div.details {
   td{
     padding: 2px;
   }
+}
+
+.icon{
+  font-size: 10px;
+}
+
+.scanner-results{
+  padding-top: 5px;
 }

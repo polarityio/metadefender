@@ -1,89 +1,122 @@
-
-
-<div class = "name">
-        {{#if block.data.details.entity}}
-        <i class = "fa fa-eye #ADADAD"></i><a href="https://metadefender.opswat.com/results#!/file/{{block.data.details.entity}}/hash/overview"> View in Metadefender </a>
-        {{/if}}
+{{#if block.data.details.entity}}
+    <div>
+        <a class="p-link"
+           href="https://metadefender.opswat.com/results#!/file/{{block.data.details.entity}}/hash/overview">
+            View in MetaDefender {{fa-icon "external-link" class="p-blue icon"}}
+        </a>
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.top_threat}}
-        <span class="balis">Threat Ranking: </span>
-        <b>{{block.data.details.body.top_threat}}</b>
-        {{/if}}
+{{#if block.data.details.body.top_threat}}
+    <div>
+        <span class="p-key">Threat Ranking: </span>
+        <span class="p-value">{{block.data.details.body.top_threat}}</span>
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.process_info.profile}}
-        <span class="balis">Profile: </span>
-        <b>{{block.data.details.body.process_info.profile}}</b>
-        {{/if}}
+{{#if (and block.data.details.body.scan_results.total_detected_avs block.data.details.body.scan_results.total_avs)}}
+    <div>
+        <span class="p-key">Detected AVS: </span>
+        <span class="p-value">{{block.data.details.body.scan_results.total_detected_avs}}/{{block.data.details.body.scan_results.total_avs}}</span>
     </div>
+{{/if}}
 
-    <div class = "details">
-      {{#if block.data.details.body.file_info.file_type_extension}}
-      <span class="balis">File Type Extension: </span>
-      <b>{{block.data.details.body.file_info.file_type_extension}}</b>
-      {{/if}}
+{{#if block.data.details.body.process_info.result}}
+    <div>
+        <span class="p-key">Result: </span>
+        <span class="p-value">{{block.data.details.body.process_info.result}}</span>
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.file_info.file_type_description}}
-        <span class="balis">File Type Description: </span>
-        <b>{{block.data.details.body.file_info.file_type_description}}</b>
-        {{/if}}
+{{#if block.data.details.body.process_info.blocked_reason}}
+    <div>
+        <span class="p-key">Blocked Reason: </span>
+        <span class="p-value">{{block.data.details.body.process_info.blocked_reason}}</span>
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.file_info.upload_timestamp}}
-        <span class="balis">Upload Timestamp: </span>
-        <b>{{block.data.details.body.file_info.upload_timestamp}}</b>
-        {{/if}}
+{{#if block.data.details.body.process_info.profile}}
+    <div>
+        <span class="p-key">Profile: </span>
+        <span class="p-value">{{block.data.details.body.process_info.profile}}</span>
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.file_info.md5}}
-        <span class="balis">MD5: </span>
-        <b>{{block.data.details.body.file_info.md5}}</b>
-        {{/if}}
+{{#if block.data.details.body.file_info.file_type_extension}}
+    <div>
+        <span class="p-key">File Type Extension: </span>
+        <span class="p-value">{{block.data.details.body.file_info.file_type_extension}}</span>
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.file_info.sha1}}
-        <span class="balis">SHA1: </span>
-        <b>{{block.data.details.body.file_info.sha1}}</b>
-        {{/if}}
+{{#if block.data.details.body.file_info.file_type_description}}
+    <div>
+        <span class="p-key">File Type Description: </span>
+        <span class="p-value">{{block.data.details.body.file_info.file_type_description}}</span>
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.file_info.sha256}}
-        <span class="balis">SHA256: </span>
-        <b>{{block.data.details.body.file_info.sha256}}</b>
-        {{/if}}
+{{#if block.data.details.body.file_info.upload_timestamp}}
+    <div>
+        <span class="p-key">Upload Timestamp: </span>
+        <span class="p-value">{{block.data.details.body.file_info.upload_timestamp}}</span>
+
     </div>
+{{/if}}
 
-    <div class = "details">
-        {{#if block.data.details.body.process_info.progress_percentage}}
-        <span class="balis">Progress Percentage: </span>
-        <b>{{block.data.details.body.process_info.progress_percentage}}</b>
-        {{/if}}
+{{#if block.data.details.body.file_info.md5}}
+    <div>
+        <span class="p-key">MD5: </span>
+        <span class="p-value">{{block.data.details.body.file_info.md5}}</span>
     </div>
+{{/if}}
 
+{{#if block.data.details.body.file_info.sha1}}
+    <div>
 
-    <a class="toggleScanner" {{action "toggleScanner"}}> Click Here to see Scanner Results</a>
+        <span class="p-key">SHA1: </span>
+        <span class="p-value">{{block.data.details.body.file_info.sha1}}</span>
+    </div>
+{{/if}}
+
+{{#if block.data.details.body.file_info.sha256}}
+    <div>
+        <span class="p-key">SHA256: </span>
+        <span class="p-value">{{block.data.details.body.file_info.sha256}}</span>
+    </div>
+{{/if}}
+
+{{#if block.data.details.body.process_info.progress_percentage}}
+    <div>
+        <span class="p-key">Progress Percentage: </span>
+        <span class="p-value">{{block.data.details.body.process_info.progress_percentage}}</span>
+    </div>
+{{/if}}
+
+{{#if block.data.details.body.scan_results.scan_details}}
+    <div class="scanner-results">
+    <span class="p-action" {{action "toggleScanner"}}>Click to View Scanner Results</span>
+
     {{#if isShowingDiv}}
-    <div id="collapse-xref" class="xref-table">
-        {{#if block.data.details.body.scan_results.scan_details}}
-            <table class="padding-0-5" style="margin-top: 10px;">
+
+        <div id="collapse-xref" class="xref-table">
+
+            <table>
                 <thead>
-                <th></th>
-                <th>Scanner</th>
-                <th>Threat Found</th>
+                    <th></th>
+                    <th>Scanner</th>
+                    <th>Threat Found</th>
                 </thead>
                 <tbody>
                 {{#each-in block.data.details.body.scan_results.scan_details as |key value|}}
                     <tr>
-                        <td style="width:20px"><i class="{{if value.threat_found 'fa fa-bug' 'bts bt-check'}}"></i></td>
+                        <td style="width:20px">
+                            {{#if value.threat_found}}
+                                {{fa-icon "bug" class="p-red icon"}}
+                            {{else}}
+                                {{fa-icon "check" class="p-green icon"}}
+                            {{/if}}
+                        </td>
                         <td>
                             {{#if key}}
                                 {{key}}
@@ -93,13 +126,14 @@
                             {{#if value.threat_found}}
                                 {{value.threat_found}}
                             {{else}}
-                                <span class="success">[Nothing Detected from Scanner]</span>
+                                <span class="p-footnote">[No Detections]</span>
                             {{/if}}
                         </td>
                     </tr>
                 {{/each-in}}
                 </tbody>
             </table>
-        {{/if}}
+        </div>
+    {{/if}}
     </div>
 {{/if}}
