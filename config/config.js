@@ -5,7 +5,7 @@ module.exports = {
      * @type String
      * @required
      */
-    name: "Metadefender",
+    name: "MetaDefender",
     /**
      * The acronym that appears in the notification window when information from this integration
      * is displayed.  Note that the acronym is included as part of each "tag" in the summary information
@@ -22,7 +22,7 @@ module.exports = {
      * @type String
      * @optional
      */
-    description: "Hash Lookups for Metadefender",
+    description: "Lookup Hash Reputation in OPSWAT MetaDefender",
     entityTypes: ['hash'],
     /**
      * An array of style files (css or less) that will be included for your integration. Any styles specified in
@@ -76,7 +76,7 @@ module.exports = {
         proxy: ''
     },
     logging: {
-        level: 'debug',  //trace, debug, info, warn, error, fatal
+        level: 'info',  //trace, debug, info, warn, error, fatal
     },
     /**
      * Options that are displayed to the user/admin in the Polarity integration user-interface.  Should be structured
@@ -89,7 +89,7 @@ module.exports = {
         {
             "key": "apiKey",
             "name": "API Key",
-            "description": "Opswat Metadefender API Key.",
+            "description": "OPSWAT MetaDefender API Key.",
             "default": "",
             "type": "text",
             "userCanEdit": true,
