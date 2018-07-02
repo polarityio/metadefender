@@ -1,12 +1,11 @@
 'use strict';
 
-let request = require('request');
-let _ = require('lodash');
-let util = require('util');
-let net = require('net');
-let config = require('./config/config');
-let async = require('async');
-let fs = require('fs');
+const request = require('request');
+const _ = require('lodash');
+const config = require('./config/config');
+const async = require('async');
+const fs = require('fs');
+
 let Logger;
 
 let requestWithDefaults;
