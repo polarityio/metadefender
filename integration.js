@@ -75,7 +75,7 @@ function doLookup(entities, options, cb) {
     if (entity.value) {
       //do the lookup
       let requestOptions = {
-        uri: 'https://api.metadefender.com/v2/hash/' + entity.value,
+        uri: 'https://api.metadefender.com/v4/hash/' + entity.value,
         method: 'GET',
         headers: { apiKey: options.apiKey },
         json: true

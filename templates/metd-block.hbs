@@ -1,101 +1,107 @@
-{{#if block.data.details.entity}}
-    <div>
+{{#if details.entity}}
+    <div class="mb-1">
         <a class="p-link"
-           href="https://metadefender.opswat.com/results#!/file/{{block.data.details.entity}}/hash/overview">
-            View in MetaDefender {{fa-icon "external-link" class="p-blue icon"}}
+           href="https://metadefender.opswat.com/results#!/file/{{details.entity}}/hash/overview">
+            View in MetaDefender {{fa-icon icon="external-link" class="p-blue external-link-icon"}}
         </a>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.top_threat}}
+{{#if details.body.top_threat}}
     <div>
         <span class="p-key">Threat Ranking: </span>
-        <span class="p-value">{{block.data.details.body.top_threat}}</span>
+        <span class="p-value">{{details.body.top_threat}}</span>
     </div>
 {{/if}}
 
-{{#if (and block.data.details.body.scan_results.total_detected_avs block.data.details.body.scan_results.total_avs)}}
+{{#if (and details.body.scan_results.total_detected_avs details.body.scan_results.total_avs)}}
     <div>
         <span class="p-key">Detected AVS: </span>
-        <span class="p-value">{{block.data.details.body.scan_results.total_detected_avs}}/{{block.data.details.body.scan_results.total_avs}}</span>
+        <span class="p-value">{{details.body.scan_results.total_detected_avs}}/{{details.body.scan_results.total_avs}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.process_info.result}}
+{{#if details.body.process_info.result}}
     <div>
         <span class="p-key">Result: </span>
-        <span class="p-value">{{block.data.details.body.process_info.result}}</span>
+        <span class="p-value">{{details.body.process_info.result}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.process_info.blocked_reason}}
+{{#if details.body.process_info.blocked_reason}}
     <div>
         <span class="p-key">Blocked Reason: </span>
-        <span class="p-value">{{block.data.details.body.process_info.blocked_reason}}</span>
+        <span class="p-value">{{details.body.process_info.blocked_reason}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.process_info.profile}}
+{{#if details.body.process_info.profile}}
     <div>
         <span class="p-key">Profile: </span>
-        <span class="p-value">{{block.data.details.body.process_info.profile}}</span>
+        <span class="p-value">{{details.body.process_info.profile}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.file_info.file_type_extension}}
+{{#if details.body.file_info.file_type_extension}}
     <div>
         <span class="p-key">File Type Extension: </span>
-        <span class="p-value">{{block.data.details.body.file_info.file_type_extension}}</span>
+        <span class="p-value">{{details.body.file_info.file_type_extension}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.file_info.file_type_description}}
+{{#if details.body.file_info.file_type_description}}
     <div>
         <span class="p-key">File Type Description: </span>
-        <span class="p-value">{{block.data.details.body.file_info.file_type_description}}</span>
+        <span class="p-value">{{details.body.file_info.file_type_description}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.file_info.upload_timestamp}}
+{{#if details.body.file_info.upload_timestamp}}
     <div>
         <span class="p-key">Upload Timestamp: </span>
-        <span class="p-value">{{block.data.details.body.file_info.upload_timestamp}}</span>
+        <span class="p-value">{{details.body.file_info.upload_timestamp}}</span>
 
     </div>
 {{/if}}
 
-{{#if block.data.details.body.file_info.md5}}
+{{#if details.body.file_info.md5}}
     <div>
         <span class="p-key">MD5: </span>
-        <span class="p-value">{{block.data.details.body.file_info.md5}}</span>
+        <span class="p-value">{{details.body.file_info.md5}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.file_info.sha1}}
+{{#if details.body.file_info.sha1}}
     <div>
 
         <span class="p-key">SHA1: </span>
-        <span class="p-value">{{block.data.details.body.file_info.sha1}}</span>
+        <span class="p-value">{{details.body.file_info.sha1}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.file_info.sha256}}
+{{#if details.body.file_info.sha256}}
     <div>
         <span class="p-key">SHA256: </span>
-        <span class="p-value">{{block.data.details.body.file_info.sha256}}</span>
+        <span class="p-value">{{details.body.file_info.sha256}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.process_info.progress_percentage}}
+{{#if details.body.process_info.progress_percentage}}
     <div>
         <span class="p-key">Progress Percentage: </span>
-        <span class="p-value">{{block.data.details.body.process_info.progress_percentage}}</span>
+        <span class="p-value">{{details.body.process_info.progress_percentage}}</span>
     </div>
 {{/if}}
 
-{{#if block.data.details.body.scan_results.scan_details}}
+{{#if details.body.scan_results.scan_details}}
     <div class="scanner-results">
-    <span class="p-action" {{action "toggleScanner"}}>Click to View Scanner Results</span>
+    <span class="p-action" {{action "toggleScanner"}}>
+        {{#if isShowingDiv}}
+            Hide Scanner Results {{fa-icon icon="chevron-up" fixedWidth=true}}
+        {{else}}
+            View Scanner Results {{fa-icon icon="chevron-down" fixedWidth=true}}
+        {{/if}}
+    </span>
 
     {{#if isShowingDiv}}
 
@@ -108,13 +114,13 @@
                     <th>Threat Found</th>
                 </thead>
                 <tbody>
-                {{#each-in block.data.details.body.scan_results.scan_details as |key value|}}
+                {{#each-in details.body.scan_results.scan_details as |key value|}}
                     <tr>
                         <td style="width:20px">
                             {{#if value.threat_found}}
-                                {{fa-icon "bug" class="p-red icon"}}
+                                {{fa-icon icon="bug" class="p-red icon"}}
                             {{else}}
-                                {{fa-icon "check" class="p-green icon"}}
+                                {{fa-icon icon="check" class="p-green icon"}}
                             {{/if}}
                         </td>
                         <td>
