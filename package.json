@@ -1,7 +1,7 @@
 {
   "main": "./integration.js",
   "name": "Opswat_Metadefender",
-  "version": "3.0.1-beta",
+  "version": "3.1.0",
   "private": true,
   "dependencies": {
     "request": "^2.88.2",
