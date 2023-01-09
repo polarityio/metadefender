@@ -1,0 +1,49 @@
+{
+  "name": "MetaDefender",
+  "acronym": "METD",
+  "description": "Lookup Hash Reputation in OPSWAT MetaDefender",
+  "entityTypes": [
+    "hash"
+  ],
+  "styles": [
+    "./styles/metd.less"
+  ],
+  "block": {
+    "component": {
+      "file": "./components/metd-block.js"
+    },
+    "template": {
+      "file": "./templates/metd-block.hbs"
+    }
+  },
+  "summary": {
+    "component": {
+      "file": "./components/metd-summary.js"
+    },
+    "template": {
+      "file": "./templates/metd-summary.hbs"
+    }
+  },
+  "request": {
+    "cert": "",
+    "key": "",
+    "passphrase": "",
+    "ca": "",
+    "proxy": "",
+    "rejectUnauthorized": true
+  },
+  "logging": {
+    "level": "info"
+  },
+  "options": [
+    {
+      "key": "apiKey",
+      "name": "API Key",
+      "description": "OPSWAT MetaDefender API Key.",
+      "default": "",
+      "type": "text",
+      "userCanEdit": true,
+      "adminOnly": false
+    }
+  ]
+}
