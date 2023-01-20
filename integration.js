@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('request');
+const request = require('postman-request');
 const config = require('./config/config');
 const async = require('async');
 const fs = require('fs');
@@ -72,72 +72,72 @@ function doLookup(entities, options, cb) {
   Logger.debug(entities);
 
   entities.forEach((entity) => {
-    if (entity.value) {
-      //do the lookup
-      let requestOptions = {
-        uri: 'https://api.metadefender.com/v4/hash/' + entity.value,
-        method: 'GET',
-        headers: { apiKey: options.apiKey },
-        json: true
-      };
+    //do the lookup
+    let requestOptions = {
+      uri: 'https://api.metadefender.com/v4/hash/' + entity.value,
+      method: 'GET',
+      headers: { apiKey: options.apiKey },
+      json: true
+    };
 
-      Logger.debug({ uri: options }, 'Request URI');
+    Logger.debug({ uri: options }, 'Request URI');
 
-      tasks.push(function(done) {
-        requestWithDefaults(requestOptions, function(error, res, body) {
-          Logger.debug({ body: body, statusCode: res.statusCode }, 'Result of Lookup');
+    tasks.push(function (done) {
+      requestWithDefaults(requestOptions, function (error, res, body) {
+        if (error) {
+          return done({
+            detail: 'HTTP Request Error',
+            error
+          });
+        }
 
-          if (error) {
-            return done({
-              detail: 'HTTP Request Error',
-              error
-            });
-          }
-
-          if (_isMiss(res, body, entity)) {
-            Logger.debug({ entity: entity.value }, 'Entity is a Miss');
-            done(null, {
-              entity: entity,
-              body: null
-            });
-          } else if (res.statusCode === 200) {
-            // we got data!
-            done(null, {
-              entity: entity,
-              body: body
-            });
-          } else if (res.statusCode === 401) {
-            done({
-              detail: 'Invalid API Key',
-              statusCode: res.statusCode
-            });
-          } else if (res.statusCode === 400) {
-            done({
-              detail: 'Bad Request: Not supported HTTP method or invalid http request',
-              statusCode: res.statusCode,
-              uri: requestOptions.uri
-            });
-          } else if (res.statusCode === 503) {
-            done({
-              detail: 'Request Limit Reached',
-              statusCode: res.statusCode
-            });
-          } else if (res.statusCode === 504) {
-            done({
-              detail: 'Gateway Timeout',
-              statusCode: res.statusCode,
-              entity: entity.value
-            });
-          } else {
-            done({
-              detail: 'Unexpected HTTP Status Code Received',
-              statusCode: res.statusCode,
-              body: body
-            });
-          }
-        });
+        if (_isMiss(res, body, entity)) {
+          Logger.debug({ entity: entity.value }, 'Entity is a Miss');
+          done(null, {
+            entity: entity,
+            body: null
+          });
+        } else if (res.statusCode === 200) {
+          // we got data!
+          done(null, {
+            entity: entity,
+            body: body,
+            apiUsed: res.headers['x-ratelimit-remaining'],
+            apiLimit: res.headers['x-ratelimit-limit'],
+            apiInterval: res.headers['x-ratelimit-interval'],
+            apiReset: res.headers['x-ratelimit-reset-in']
+          });
+        } else if (res.statusCode === 401) {
+          done({
+            detail: 'Invalid API Key',
+            statusCode: res.statusCode
+          });
+        } else if (res.statusCode === 400) {
+          done({
+            detail: 'Bad Request: Not supported HTTP method or invalid http request',
+            statusCode: res.statusCode,
+            uri: requestOptions.uri
+          });
+        } else if (res.statusCode === 503) {
+          done({
+            detail: `Request Limit Reached ${res.headers['x-ratelimit-remanining']} / ${res.headers['x-ratelimit-limit']} lookups used.  Rate limit resets in ${res.headers['x-ratelimit-reset-in']}`,
+            statusCode: res.statusCode
+          });
+        } else if (res.statusCode === 504) {
+          done({
+            detail: 'Gateway Timeout',
+            statusCode: res.statusCode,
+            entity: entity.value
+          });
+        } else {
+          done({
+            detail: 'Unexpected HTTP Status Code Received',
+            statusCode: res.statusCode,
+            body: body
+          });
+        }
       });
-    }
+    });
   });
 
   async.parallelLimit(tasks, MAX_PARALLEL_LOOKUPS, (err, results) => {
@@ -156,8 +156,15 @@ function doLookup(entities, options, cb) {
         lookupResults.push({
           entity: result.entity,
           data: {
-            summary: [],
-            details: { body: result.body, entity: result.entity.value }
+            summary: getSummaryTags(result.body),
+            details: {
+              body: result.body,
+              apiUsed: result.apiUsed,
+              apiLimit: result.apiLimit,
+              apiInterval: result.apiInterval,
+              apiReset: apiResetToMilliseconds(result.apiReset),
+              entity: result.entity.value
+            }
           }
         });
       }
@@ -168,6 +175,41 @@ function doLookup(entities, options, cb) {
   });
 }
 
+/**
+ * The apiReset header (x-ratelimit-reset-in) is a string and ends with the letter "s" for seconds.
+ * For template rendering purposes it is much easier if we drop the trailing "s" and convert to milliseconds.
+ * This allows us to use the moment duration helper to convert to an easily to human readable form.
+ * @param apiReset
+ */
+function apiResetToMilliseconds(apiReset) {
+  if (typeof apiReset === 'string' && apiReset.endsWith('s')) {
+    return +apiReset.slice(0, apiReset.length - 1) * 1000;
+  }
+  // Unexpected format so just return as is
+  return apiReset;
+}
+
+function getSummaryTags(body) {
+  const tags = [];
+  if (body.file_info && body.file_info.display_name) {
+    tags.push(`Display Name: ${body.file_info.display_name}`);
+  }
+
+  if (body.scan_results && body.scan_results.total_detected_avs && body.scan_results.total_avs) {
+    tags.push(`AVS Detected: ${body.scan_results.total_detected_avs}/${body.scan_results.total_avs}`);
+  }
+
+  if (body.scan_results && body.scan_results.scan_all_result_a) {
+    tags.push(`Scan Result: ${body.scan_results.scan_all_result_a}`);
+  }
+
+  if (body.process_info && body.process_info.result) {
+    tags.push(`Status: ${body.process_info.result}`);
+  }
+
+  return tags;
+}
+
 function validateOptions(userOptions, cb) {
   let errors = [];
   if (
@@ -176,14 +218,14 @@ function validateOptions(userOptions, cb) {
   ) {
     errors.push({
       key: 'apiKey',
-      message: 'You must provide a Metadefender API key'
+      message: 'You must provide a MetaDefender API key'
     });
   }
   cb(null, errors);
 }
 
 module.exports = {
-  doLookup: doLookup,
-  startup: startup,
-  validateOptions: validateOptions
+  doLookup,
+  startup,
+  validateOptions
 };
