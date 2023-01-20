@@ -24,6 +24,7 @@ module.exports = {
    */
   description: 'Lookup Hash Reputation in OPSWAT MetaDefender',
   entityTypes: ['hash'],
+  defaultColor: 'light-pink',
   /**
    * An array of style files (css or less) that will be included for your integration. Any styles specified in
    * the below files can be used in your custom template.
@@ -46,14 +47,6 @@ module.exports = {
     },
     template: {
       file: './templates/metd-block.hbs'
-    }
-  },
-  summary: {
-    component: {
-      file: './components/metd-summary.js'
-    },
-    template: {
-      file: './templates/metd-summary.hbs'
     }
   },
   request: {
@@ -90,9 +83,9 @@ module.exports = {
       name: 'API Key',
       description: 'OPSWAT MetaDefender API Key.',
       default: '',
-      type: 'text',
-      userCanEdit: true,
-      adminOnly: false
+      type: 'password',
+      userCanEdit: false,
+      adminOnly: true
     }
   ]
 };
