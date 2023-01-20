@@ -48,14 +48,6 @@ module.exports = {
       file: './templates/metd-block.hbs'
     }
   },
-  summary: {
-    component: {
-      file: './components/metd-summary.js'
-    },
-    template: {
-      file: './templates/metd-summary.hbs'
-    }
-  },
   request: {
     // Provide the path to your certFile. Leave an empty string to ignore this option.
     // Relative paths are relative to the METD integration's root directory
