@@ -24,6 +24,7 @@ module.exports = {
    */
   description: 'Lookup Hash Reputation in OPSWAT MetaDefender',
   entityTypes: ['hash'],
+  defaultColor: 'light-pink',
   /**
    * An array of style files (css or less) that will be included for your integration. Any styles specified in
    * the below files can be used in your custom template.

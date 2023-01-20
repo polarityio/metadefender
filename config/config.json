@@ -5,6 +5,7 @@
   "entityTypes": [
     "hash"
   ],
+  "defaultColor": "light-pink",
   "styles": [
     "./styles/metd.less"
   ],
