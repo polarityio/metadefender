@@ -90,9 +90,9 @@ module.exports = {
       name: 'API Key',
       description: 'OPSWAT MetaDefender API Key.',
       default: '',
-      type: 'text',
-      userCanEdit: true,
-      adminOnly: false
+      type: 'password',
+      userCanEdit: false,
+      adminOnly: true
     }
   ]
 };
