@@ -1,4 +1,5 @@
 {
+  "polarityIntegrationUuid": "c0722f50-cce1-11ed-aeee-075d3490155d",
   "name": "MetaDefender",
   "acronym": "METD",
   "description": "Lookup Hash Reputation in OPSWAT MetaDefender",
