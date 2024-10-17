@@ -3,13 +3,9 @@
   "name": "MetaDefender",
   "acronym": "METD",
   "description": "Lookup Hash Reputation in OPSWAT MetaDefender",
-  "entityTypes": [
-    "hash"
-  ],
+  "entityTypes": ["MD5", "SHA1", "SHA256"],
   "defaultColor": "light-pink",
-  "styles": [
-    "./styles/metd.less"
-  ],
+  "styles": ["./styles/metd.less"],
   "block": {
     "component": {
       "file": "./components/metd-block.js"
@@ -17,13 +13,6 @@
     "template": {
       "file": "./templates/metd-block.hbs"
     }
-  },
-  "request": {
-    "cert": "",
-    "key": "",
-    "passphrase": "",
-    "ca": "",
-    "proxy": ""
   },
   "logging": {
     "level": "info"
